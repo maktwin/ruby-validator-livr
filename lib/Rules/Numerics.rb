@@ -46,7 +46,7 @@ end
 
 class MaxNumber
   def initialize(max_number)
-    @max_number = max_number
+    @max_number = max_number.to_f
   end
 
   def [](value, unuse, unuse_)
@@ -58,7 +58,7 @@ end
 
 class MinNumber
   def initialize(min_number)
-    @min_number = min_number
+    @min_number = min_number.to_f
   end
 
   def [](value, unuse, unuse_)
@@ -70,8 +70,8 @@ end
 
 class NumberBetween
   def initialize(min_number, max_number)
-    @min_number = min_number
-    @max_number = max_number
+    @min_number = min_number.to_f
+    @max_number = max_number.to_f
   end
 
   def [](value, unuse, unuse_)

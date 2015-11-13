@@ -54,15 +54,14 @@ class Validator
     return 'FORMAT_ERROR' unless data.kind_of? Hash
 
     result, errors = {}, {}
-    field_result = []
     @validators.each do |field_name, validators|
       next if validators.empty?
+      field_result = []
 
       value = data.has_key?(field_name) ? data[field_name] : nil
       validators.each do |v_cb|
         arg = result.has_key?(field_name) ? result[field_name] : value
         error_code = v_cb[arg, data, field_result]
-
         if error_code
           errors[field_name] = error_code
           break

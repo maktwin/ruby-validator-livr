@@ -1,4 +1,4 @@
-$LOAD_PATH << './Rules'
+$LOAD_PATH << './lib/Rules'
 
 require "Common"
 require "Filters"

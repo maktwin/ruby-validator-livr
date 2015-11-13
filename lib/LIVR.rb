@@ -12,16 +12,16 @@ end
 
 # -----------TEST----------------
 
-livr_rules = {
-    :name  => [:required, {:max_length => 10}],
-    :phone => [:integer, {:max_length => 10}],
-}
+# livr_rules = {
+#     :name  => [:required, {:leave_only => 'mak'}],
+#     :phone => [:integer, {:max_length => 10}],
+# }
 
-data = {
-  :name  => 'maktwin',
-  :phone => '55555'
-}
+# data = {
+#   :name  => 'maktwin',
+#   :phone => '55555'
+# }
 
-livr = LIVR.new(livr_rules)
-puts livr.validate(data)
-puts livr.get_errors
+# livr = LIVR.new(livr_rules)
+# puts livr.validate(data)
+# puts livr.get_errors
