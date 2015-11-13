@@ -56,7 +56,7 @@ class EqualToField
 
   def [](value, params, unuse)
     return if value.nil? or value.eql?('')
-    return 'FORMAT_ERROR' unless Utils.is_string_or_number(value)
+    return 'FORMAT_ERROR' unless Utils.is_string_or_number?(value)
     return 'FIELDS_NOT_EQUAL' unless value == params[@field]
   end
 end
