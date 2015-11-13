@@ -19,7 +19,8 @@ end
 #     :url   => [:url, :required],
 #     :date => [:iso_date],
 #     :password => [:required, { :length_between => [5, 20] }],
-#     :password2 => [{ :equal_to_field => 'password' }]
+#     :password2 => [{ :equal_to_field => 'password' }],
+#     :gender    => {:one_of => ['male', 'female']}
 # }
 
 # data = {
@@ -28,8 +29,9 @@ end
 #   :email => 'm.panchoha@gmail.com',
 #   :url   => 'https://localhost',
 #   :date  => '2010-01-25',
-#   :password => 'password',
-#   :password2 => 'password'
+#   :password  => 'password',
+#   :password2 => 'password',
+#   :gender    => 'male'
 # }
 
 # livr = LIVR.new(livr_rules)

@@ -1,9 +1,6 @@
 class OneOf
-  def initialize(*allowed_values)
-    @allowed_values = allowed_values[0]
-    unless @allowed_values.kind_of? Array
-      @allowed_values.pop
-    end
+  def initialize(allowed_values)
+    @allowed_values = allowed_values
   end
 
   def [](value, unuse, unuse_)
