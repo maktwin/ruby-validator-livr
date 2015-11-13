@@ -51,16 +51,16 @@ class LengthEqual
 end
 
 class LengthBetween
-  def initialize(min_length, max_length)
-    @min_length = min_length
-    @max_length = max_length
+  def initialize(args)
+    @min_length = args[0]
+    @max_length = args[1]
   end
 
   def [](value, unuse, unuse_)
     return if value.nil? or value.eql?('')
     return 'FORMAT_ERROR' unless value.kind_of? String
-    return 'TOO_SHORT' if value.length < min_length
-    return 'TOO_LONG'  if value.length > max_length
+    return 'TOO_SHORT' if value.length < @min_length
+    return 'TOO_LONG'  if value.length > @max_length
   end
 end
 

@@ -34,5 +34,6 @@ DEFAULT_RULES = {
 
   :email            => Email,
   :url              => Url,
-  :iso_date         => IsoDate
+  :iso_date         => IsoDate,
+  :equal_to_field   => EqualToField
 }

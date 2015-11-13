@@ -1,5 +1,6 @@
 require 'uri'
 require 'date'
+require 'Utils'
 
 class Email
   def initialize(args)
@@ -45,5 +46,17 @@ class IsoDate
     rescue
       return 'WRONG_DATE'
     end
+  end
+end
+
+class EqualToField
+  def initialize(args)
+    @field = args[0].to_sym
+  end
+
+  def [](value, params, unuse)
+    return if value.nil? or value.eql?('')
+    return 'FORMAT_ERROR' unless Utils.is_string_or_number(value)
+    return 'FIELDS_NOT_EQUAL' unless value == params[@field]
   end
 end
