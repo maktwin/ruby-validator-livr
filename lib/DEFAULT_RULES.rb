@@ -4,6 +4,7 @@ require "Common"
 require "Filters"
 require "Numerics"
 require "Strings"
+require "Special"
 
 DEFAULT_RULES = {
   :required         => Required,
@@ -29,5 +30,9 @@ DEFAULT_RULES = {
   :min_length       => MinLength,
   :length_equal     => LengthEqual,
   :length_between   => LengthBetween,
-  :like             => Like
+  :like             => Like,
+
+  :email            => Email,
+  :url              => Url,
+  :iso_date         => IsoDate
 }
