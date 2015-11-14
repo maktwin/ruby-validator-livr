@@ -1,4 +1,4 @@
-require 'Utils'
+require './Utils'
 
 class Integers
   def initialize(args)
@@ -6,7 +6,7 @@ class Integers
 
   def [](value, unuse, unuse_)
     return if value.nil? or value.eql?('')
-    return 'FORMAT_ERROR' unless Utils.is_string_or_number(value)
+    return 'FORMAT_ERROR' unless Utils.is_string_or_number?(value)
     return 'NOT_INTEGER' unless value.to_s =~ /^\-?\d+$/
   end
 end
@@ -17,7 +17,7 @@ class PositiveInteger
 
   def [](value, unuse, unuse_)
     return if value.nil? or value.eql?('')
-    return 'FORMAT_ERROR' unless Utils.is_string_or_number(value)
+    return 'FORMAT_ERROR' unless Utils.is_string_or_number?(value)
     return 'NOT_POSITIVE_INTEGER' unless value.to_s =~ /^\d+$/ and value > 0
   end
 end
@@ -28,7 +28,7 @@ class Decimal
 
   def [](value, unuse, unuse_)
     return if value.nil? or value.eql?('')
-    return 'FORMAT_ERROR' unless Utils.is_string_or_number(value)
+    return 'FORMAT_ERROR' unless Utils.is_string_or_number?(value)
     return 'NOT_DECIMAL' unless value.to_s =~ /^\-?[\d.]+$/ and value.kind_of? Numeric
   end
 end
@@ -39,7 +39,7 @@ class PositiveDecimal
   
   def [](value, unuse, unuse_)
     return if value.nil? or value.eql?('')
-    return 'FORMAT_ERROR' unless Utils.is_string_or_number(value)
+    return 'FORMAT_ERROR' unless Utils.is_string_or_number?(value)
     return 'NOT_POSITIVE_DECIMAL' unless value.to_s =~ /^\-?[\d.]+$/ and value.kind_of? Numeric and value > 0
   end
 end
@@ -51,7 +51,7 @@ class MaxNumber
 
   def [](value, unuse, unuse_)
     return if value.nil? or value.eql?('')
-    return 'FORMAT_ERROR' unless Utils.is_string_or_number(value)
+    return 'FORMAT_ERROR' unless Utils.is_string_or_number?(value)
     return 'TOO_HIGH' if value.to_f > @max_number
   end
 end
@@ -63,7 +63,7 @@ class MinNumber
 
   def [](value, unuse, unuse_)
     return if value.nil? or value.eql?('')
-    return 'FORMAT_ERROR' unless Utils.is_string_or_number(value)
+    return 'FORMAT_ERROR' unless Utils.is_string_or_number?(value)
     return 'TOO_LOW' if value.to_f < min_number
   end
 end
@@ -76,7 +76,7 @@ class NumberBetween
 
   def [](value, unuse, unuse_)
     return if value.nil? or value.eql?('')
-    return 'FORMAT_ERROR' unless Utils.is_string_or_number(value)
+    return 'FORMAT_ERROR' unless Utils.is_string_or_number?(value)
     return 'TOO_LOW' if value.to_f < min_number
     return 'TOO_HIGH' if value.to_f > max_number
   end

@@ -1,10 +1,9 @@
-$LOAD_PATH << './lib/Rules'
-
-require "Common"
-require "Filters"
-require "Numerics"
-require "Strings"
-require "Special"
+require "./Rules/Common"
+require "./Rules/Filters"
+require "./Rules/Numerics"
+require "./Rules/Strings"
+require "./Rules/Special"
+require "./Rules/Helpers"
 
 DEFAULT_RULES = {
   :required         => Required,
@@ -35,5 +34,6 @@ DEFAULT_RULES = {
   :email            => Email,
   :url              => Url,
   :iso_date         => IsoDate,
-  :equal_to_field   => EqualToField
+  :equal_to_field   => EqualToField,
+  :nested_object    => NestedObject
 }
