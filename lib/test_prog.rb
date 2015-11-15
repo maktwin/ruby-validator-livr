@@ -59,12 +59,12 @@ data = {
     :quantity => 3
   }],
   :products_list => [{
-    :product_type => 'material',
+    :product_type => :material,
     :material_id => 345,
     :quantity =>  5,
     :warehouse_id => 43
   },{
-    :product_type => 'service',
+    :product_type => :service,
     :name => 'Clean filter'
   }]
 }

@@ -101,12 +101,12 @@ class ListOfDifferentObjects
 
     results, errors = [], []
     objects.each do |obj|
-      if not obj.kind_of? Hash or obj[@selector_field].nil? or @validators[obj[@selector_field].to_sym].nil?
+      if not obj.kind_of? Hash or obj[@selector_field].nil? or @validators[obj[@selector_field]].nil?
         errors.push('FORMAT_ERROR')
         next
       end
 
-      validator = @validators[obj[@selector_field].to_sym]
+      validator = @validators[obj[@selector_field]]
       result = validator.validate(obj)
 
       if result
