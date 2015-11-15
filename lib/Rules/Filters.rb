@@ -1,5 +1,5 @@
 class Trim
-  def initialize(args)
+  def initialize(unuse, unuse_)
   end
 
   def [](value, unuse, output)
@@ -10,7 +10,7 @@ class Trim
 end
 
 class ToLc
-  def initialize(args)
+  def initialize(unuse, unuse_)
   end
 
   def [](value, unuse, output)
@@ -21,7 +21,7 @@ class ToLc
 end
 
 class ToUc
-  def initialize(args)
+  def initialize(unuse, unuse_)
   end
 
   def [](value, unuse, output)
@@ -32,8 +32,8 @@ class ToUc
 end
 
 class Remove
-  def initialize(chars)
-    @chars = chars
+  def initialize(chars, unuse_)
+    @chars = args[0]
   end
 
   def [](value, unuse, output)
@@ -44,8 +44,8 @@ class Remove
 end
 
 class LeaveOnly
-  def initialize(chars)
-    @chars = chars
+  def initialize(chars, unuse_)
+    @chars = chars[0]
   end
 
   def [](value, unuse, output)

@@ -3,7 +3,7 @@ require 'date'
 require './Utils'
 
 class Email
-  def initialize(args)
+  def initialize(unuse, unuse_)
     @email_re = %r(^([\w\-_+]+(?:\.[\w\-_+]+)*)@((?:[\w\-]+\.)*\w[\w\-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)i
   end
 
@@ -18,7 +18,7 @@ class Email
 end
 
 class Url
-  def initialize(args)
+  def initialize(unuse, unuse_)
     @url_re = %r(\A(http|https):\/\/([a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}|
             (25[0-5]|2[0-4]\d|[0-1]?\d?\d)(\.(25[0-5]|2[0-4]\d|[0-1]?\d?\d)){3}
             |localhost)(:[0-9]{1,5})?(\/.*)?\z)ix
@@ -32,7 +32,7 @@ class Url
 end
 
 class IsoDate
-  def initialize(args)
+  def initialize(unuse, unuse_)
     @date_re = %r(^(\d{4})-(\d{2})-(\d{2})$)
   end
 
@@ -50,7 +50,7 @@ class IsoDate
 end
 
 class EqualToField
-  def initialize(args)
+  def initialize(args, unuse_)
     @field = args[0].to_sym
   end
 

@@ -1,5 +1,5 @@
 class Required
-  def initialize(args)
+  def initialize(unuse, unuse_)
   end
 
   def [](value, unuse, unuse_)
@@ -8,16 +8,16 @@ class Required
 end
 
 class NotEmpty
-  def initialize(args)
+  def initialize(unuse, unuse_)
   end
 
   def [](value, unuse, unuse_)
-    'CANNOT_BE_EMPTY' if value.eql?('') and !value.nil?
+    'CANNOT_BE_EMPTY' if !value.nil? and value.eql?('')
   end
 end
 
 class NotEmptyList
-  def initialize(args)
+  def initialize(unuse, unuse_)
   end
   
   def [](list, unuse, unuse_)

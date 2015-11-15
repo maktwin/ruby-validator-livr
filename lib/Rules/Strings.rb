@@ -1,5 +1,5 @@
 class OneOf
-  def initialize(allowed_values)
+  def initialize(args, unuse_)
     @allowed_values = allowed_values
   end
 
@@ -11,8 +11,8 @@ class OneOf
 end
 
 class MaxLength
-  def initialize(max_length)
-    @max_length = max_length[0].to_i
+  def initialize(length, unuse_)
+    @max_length = length[0].to_i
   end
 
   def [](value, unuse, unuse_)
@@ -23,8 +23,8 @@ class MaxLength
 end
 
 class MinLength
-  def initialize(min_length)
-    @min_length = min_length
+  def initialize(length, unuse_)
+    @min_length = length[0].to_i
   end
 
   def [](value, unuse, unuse_)
@@ -35,8 +35,8 @@ class MinLength
 end
 
 class LengthEqual
-  def initialize(length)
-    @length = length
+  def initialize(length, unuse_)
+    @length = length[0]
   end
 
   def [](value, unuse, unuse_)
@@ -48,9 +48,9 @@ class LengthEqual
 end
 
 class LengthBetween
-  def initialize(args)
-    @min_length = args[0]
-    @max_length = args[1]
+  def initialize(length, unuse_)
+    @min_length = length[0]
+    @max_length = length[1]
   end
 
   def [](value, unuse, unuse_)
@@ -62,7 +62,7 @@ class LengthBetween
 end
 
 class Like
-  def initialize(args)
+  def initialize(args, unuse_)
     re = args[0]
     is_ignore_case = args.length == 2 && args[1] === 'i'
     @re = is_ignore_case ? %r(#{re})i : %r(#{re})

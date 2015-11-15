@@ -10,12 +10,14 @@ class LIVR
     @validator_builders = {}
 
     register_rules(DEFAULT_RULES)
+    self
   end
 
   def register_rules(rules)
     rules.each do |name, value|
       @validator_builders[name] = value
     end
+    self
   end
 
   def prepare
@@ -33,6 +35,7 @@ class LIVR
     end
 
     @is_prepare = true
+    self
   end
 
   def _parse_rule(livr_rule)
@@ -50,7 +53,7 @@ class LIVR
 
   def _build_validators(name, args)
     raise "Rule [%s] not registered" % [name] unless @validator_builders.has_key?(name)
-    @validator_builders[name].new(args)
+    @validator_builders[name].new(args, get_rules)
   end
 
   def validate(data)
@@ -82,6 +85,10 @@ class LIVR
       @errors = errors
       return false
     end
+  end
+
+  def get_rules
+    @validator_builders
   end
 
   def get_errors

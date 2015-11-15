@@ -1,7 +1,7 @@
 require './Utils'
 
 class Integers
-  def initialize(args)
+  def initialize(unuse, unuse_)
   end
 
   def [](value, unuse, unuse_)
@@ -12,18 +12,18 @@ class Integers
 end
 
 class PositiveInteger
-  def initialize(args)
+  def initialize(unuse, unuse_)
   end
 
   def [](value, unuse, unuse_)
     return if value.nil? or value.eql?('')
     return 'FORMAT_ERROR' unless Utils.is_string_or_number?(value)
-    return 'NOT_POSITIVE_INTEGER' unless value.to_s =~ /^\d+$/ and value > 0
+    return 'NOT_POSITIVE_INTEGER' unless value.to_s =~ /^\d+$/ and value.to_i > 0
   end
 end
 
 class Decimal
-  def initialize(args)
+  def initialize(unuse, unuse_)
   end
 
   def [](value, unuse, unuse_)
@@ -34,7 +34,7 @@ class Decimal
 end
 
 class PositiveDecimal
-  def initialize(args)
+  def initialize(unuse, unuse_)
   end
   
   def [](value, unuse, unuse_)
@@ -45,8 +45,8 @@ class PositiveDecimal
 end
 
 class MaxNumber
-  def initialize(max_number)
-    @max_number = max_number.to_f
+  def initialize(number, unuse_)
+    @max_number = number[0].to_f
   end
 
   def [](value, unuse, unuse_)
@@ -57,21 +57,21 @@ class MaxNumber
 end
 
 class MinNumber
-  def initialize(min_number)
-    @min_number = min_number.to_f
+  def initialize(number, unuse_)
+    @min_number = number[0].to_f
   end
 
   def [](value, unuse, unuse_)
     return if value.nil? or value.eql?('')
     return 'FORMAT_ERROR' unless Utils.is_string_or_number?(value)
-    return 'TOO_LOW' if value.to_f < min_number
+    return 'TOO_LOW' if value.to_f < @min_number
   end
 end
 
 class NumberBetween
-  def initialize(min_number, max_number)
-    @min_number = min_number.to_f
-    @max_number = max_number.to_f
+  def initialize(numbers, unuse_)
+    @min_number = min_number[0].to_f
+    @max_number = max_number[1].to_f
   end
 
   def [](value, unuse, unuse_)
