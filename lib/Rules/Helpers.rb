@@ -1,4 +1,4 @@
-require './LIVR'
+require 'LIVR'
 
 class NestedObject
   def initialize(rules, rule_builders)

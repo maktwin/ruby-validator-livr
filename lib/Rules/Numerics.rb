@@ -1,4 +1,4 @@
-require './Utils'
+require 'Utils'
 
 class Integers
   def initialize(unuse, unuse_)

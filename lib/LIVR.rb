@@ -1,4 +1,4 @@
-require './DEFAULT_RULES'
+require 'DEFAULT_RULES'
 
 class LIVR
   def initialize(livr_rules, is_auto_trim = false)

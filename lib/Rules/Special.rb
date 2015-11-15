@@ -1,6 +1,6 @@
 require 'uri'
 require 'date'
-require './Utils'
+require 'Utils'
 
 class Email
   def initialize(unuse, unuse_)

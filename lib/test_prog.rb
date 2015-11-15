@@ -3,7 +3,7 @@ require './LIVR'
 # -----------TEST----------------
 
 livr_rules = {
-    :name  => [:required, {:leave_only => 'mak'}],
+    :name  => [ { :required => [] } ],
     :phone => [:integer, {:max_length => 10}],
     :email => [:email],
     :url   => [:url, :required],

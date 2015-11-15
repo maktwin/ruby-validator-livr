@@ -1,9 +1,9 @@
-require "./Rules/Common"
-require "./Rules/Filters"
-require "./Rules/Numerics"
-require "./Rules/Strings"
-require "./Rules/Special"
-require "./Rules/Helpers"
+require "Rules/Common"
+require "Rules/Filters"
+require "Rules/Numerics"
+require "Rules/Strings"
+require "Rules/Special"
+require "Rules/Helpers"
 
 DEFAULT_RULES = {
   :required                  => Required,
