@@ -1,6 +1,11 @@
 class OneOf
-  def initialize(args, unuse_)
-    @allowed_values = allowed_values
+  def initialize(args)
+    if args[0].kind_of? Array
+      @allowed_values = args.shift
+    else
+      args.pop
+      @allowed_values = args
+    end
   end
 
   def [](value, unuse, unuse_)
@@ -11,8 +16,8 @@ class OneOf
 end
 
 class MaxLength
-  def initialize(length, unuse_)
-    @max_length = length[0].to_i
+  def initialize(args)
+    @max_length = args.shift.to_i
   end
 
   def [](value, unuse, unuse_)
@@ -23,8 +28,8 @@ class MaxLength
 end
 
 class MinLength
-  def initialize(length, unuse_)
-    @min_length = length[0].to_i
+  def initialize(args)
+    @min_length = args.shift.to_i
   end
 
   def [](value, unuse, unuse_)
@@ -35,8 +40,8 @@ class MinLength
 end
 
 class LengthEqual
-  def initialize(length, unuse_)
-    @length = length[0]
+  def initialize(args)
+    @length = args.shift.to_i
   end
 
   def [](value, unuse, unuse_)
@@ -48,9 +53,10 @@ class LengthEqual
 end
 
 class LengthBetween
-  def initialize(length, unuse_)
-    @min_length = length[0]
-    @max_length = length[1]
+  def initialize(args)
+    args.pop
+    @min_length = args[0]
+    @max_length = args[1]
   end
 
   def [](value, unuse, unuse_)
@@ -62,7 +68,8 @@ class LengthBetween
 end
 
 class Like
-  def initialize(args, unuse_)
+  def initialize(args)
+    args.pop      # pop rule_builders
     re = args[0]
     is_ignore_case = args.length == 2 && args[1] === 'i'
     @re = is_ignore_case ? %r(#{re})i : %r(#{re})

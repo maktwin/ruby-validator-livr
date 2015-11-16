@@ -1,7 +1,7 @@
 require 'Utils'
 
 class Integers
-  def initialize(unuse, unuse_)
+  def initialize(args)
   end
 
   def [](value, unuse, unuse_)
@@ -12,7 +12,7 @@ class Integers
 end
 
 class PositiveInteger
-  def initialize(unuse, unuse_)
+  def initialize(args)
   end
 
   def [](value, unuse, unuse_)
@@ -23,30 +23,30 @@ class PositiveInteger
 end
 
 class Decimal
-  def initialize(unuse, unuse_)
+  def initialize(args)
   end
 
   def [](value, unuse, unuse_)
     return if value.nil? or value.eql?('')
     return 'FORMAT_ERROR' unless Utils.is_string_or_number?(value)
-    return 'NOT_DECIMAL' unless value.to_s =~ /^\-?[\d.]+$/ and value.kind_of? Numeric
+    return 'NOT_DECIMAL' unless value.to_s =~ /^\-?[\d.]+$/
   end
 end
 
 class PositiveDecimal
-  def initialize(unuse, unuse_)
+  def initialize(args)
   end
   
   def [](value, unuse, unuse_)
     return if value.nil? or value.eql?('')
     return 'FORMAT_ERROR' unless Utils.is_string_or_number?(value)
-    return 'NOT_POSITIVE_DECIMAL' unless value.to_s =~ /^\-?[\d.]+$/ and value.kind_of? Numeric and value > 0
+    return 'NOT_POSITIVE_DECIMAL' unless value =~ /^\-?[\d.]+$/ and value.to_f > 0
   end
 end
 
 class MaxNumber
-  def initialize(number, unuse_)
-    @max_number = number[0].to_f
+  def initialize(args)
+    @max_number = args.shift.to_f
   end
 
   def [](value, unuse, unuse_)
@@ -57,8 +57,8 @@ class MaxNumber
 end
 
 class MinNumber
-  def initialize(number, unuse_)
-    @min_number = number[0].to_f
+  def initialize(args)
+    @min_number = args.shift.to_f
   end
 
   def [](value, unuse, unuse_)
@@ -69,15 +69,16 @@ class MinNumber
 end
 
 class NumberBetween
-  def initialize(numbers, unuse_)
-    @min_number = min_number[0].to_f
-    @max_number = max_number[1].to_f
+  def initialize(args)
+    args.pop
+    @min_number = args[0].to_f
+    @max_number = args[1].to_f
   end
 
   def [](value, unuse, unuse_)
     return if value.nil? or value.eql?('')
     return 'FORMAT_ERROR' unless Utils.is_string_or_number?(value)
-    return 'TOO_LOW' if value.to_f < min_number
-    return 'TOO_HIGH' if value.to_f > max_number
+    return 'TOO_LOW' if value.to_f < @min_number
+    return 'TOO_HIGH' if value.to_f > @max_number
   end
 end

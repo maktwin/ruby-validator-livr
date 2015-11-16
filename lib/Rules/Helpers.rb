@@ -1,8 +1,8 @@
 require 'LIVR'
 
 class NestedObject
-  def initialize(rules, rule_builders)
-    livr = rules[0]
+  def initialize(args)
+    livr, rule_builders = args
     @validator = LIVR.new(livr).register_rules(rule_builders).prepare
   end
 
@@ -12,7 +12,7 @@ class NestedObject
 
     result = @validator.validate(nested_obj)
     if result
-      output = result
+      output.push(result)
       return
     else
       return @validator.get_errors
@@ -21,7 +21,14 @@ class NestedObject
 end
 
 class ListOf
-  def initialize(livr, rule_builders)
+  def initialize(args)
+    if args[0].kind_of? Array
+      livr, rule_builders = args
+    else
+      rule_builders = args.pop
+      livr = args
+    end
+    
     @validator = LIVR.new({:field => livr}).register_rules(rule_builders).prepare
   end
 
@@ -45,15 +52,15 @@ class ListOf
     if errors.any?
       return errors
     else
-      output = results
+      output.push(results)
       return
     end
   end
 end
 
 class ListOfObjects
-  def initialize(rules, rule_builders)
-    livr = rules[0]
+  def initialize(args)
+    livr, rule_builders = args
     @validator = LIVR.new(livr).register_rules(rule_builders).prepare
   end
 
@@ -77,16 +84,15 @@ class ListOfObjects
     if errors.any?
       return errors
     else
-      output = results
+      output.push(results)
       return
     end
   end
 end
 
 class ListOfDifferentObjects
-  def initialize(args, rule_builders)
-    @selector_field = args[0]
-    livrs           = args[1]
+  def initialize(args)
+    @selector_field, livrs, rule_builders = args
 
     @validators = {}
     livrs.each do |selector_value, livr|
@@ -108,7 +114,6 @@ class ListOfDifferentObjects
 
       validator = @validators[obj[@selector_field]]
       result = validator.validate(obj)
-
       if result
         results.push(result)
         errors.push(nil)
@@ -121,7 +126,7 @@ class ListOfDifferentObjects
     if errors.any?
       return errors
     else
-      output = results
+      output.push(results)
       return
     end
   end

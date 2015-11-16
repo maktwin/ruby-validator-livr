@@ -53,7 +53,10 @@ class LIVR
 
   def _build_validators(name, args)
     raise "Rule [%s] not registered" % [name] unless @validator_builders.has_key?(name)
-    @validator_builders[name].new(args, get_rules)
+
+    allArgs = args
+    allArgs.push(get_rules)
+    @validator_builders[name].new(allArgs)
   end
 
   def validate(data)
@@ -64,7 +67,6 @@ class LIVR
     @validators.each do |field_name, validators|
       next if validators.empty?
       field_result = []
-
       value = data.has_key?(field_name) ? data[field_name] : nil
       validators.each do |v_cb|
         arg = result.has_key?(field_name) ? result[field_name] : value
@@ -72,7 +74,7 @@ class LIVR
         if error_code
           errors[field_name] = error_code
           break
-        elsif not value.nil?
+        elsif data.has_key?(field_name)
           result[field_name] = field_result.empty? ? value : field_result[0]
         end
       end

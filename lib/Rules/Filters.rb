@@ -1,5 +1,5 @@
 class Trim
-  def initialize(unuse, unuse_)
+  def initialize(args)
   end
 
   def [](value, unuse, output)
@@ -10,7 +10,7 @@ class Trim
 end
 
 class ToLc
-  def initialize(unuse, unuse_)
+  def initialize(args)
   end
 
   def [](value, unuse, output)
@@ -21,7 +21,7 @@ class ToLc
 end
 
 class ToUc
-  def initialize(unuse, unuse_)
+  def initialize(args)
   end
 
   def [](value, unuse, output)
@@ -32,25 +32,25 @@ class ToUc
 end
 
 class Remove
-  def initialize(chars, unuse_)
-    @chars = args[0]
+  def initialize(args)
+    @chars = args.shift
   end
 
   def [](value, unuse, output)
     return if value.nil? or value.eql?('') or not value.kind_of? String
-    output.push(value.gsub(/[\Q#{@chars}\E]/, ''))
+    output.push(value.gsub(/[#{Regexp.escape(@chars)}]/, ''))
     return nil
   end
 end
 
 class LeaveOnly
-  def initialize(chars, unuse_)
-    @chars = chars[0]
+  def initialize(args)
+    @chars = args.shift
   end
 
   def [](value, unuse, output)
     return if value.nil? or value.eql?('') or not value.kind_of? String
-    output.push(value.gsub(/[^\Q#{@chars}\E]/, ''))
+    output.push(value.gsub(/[^\Q#{Regexp.escape(@chars)}\E]/, ''))
     return nil
   end
 end
