@@ -3,7 +3,7 @@ class OneOf
     if args[0].kind_of? Array
       @allowed_values = args.shift
     else
-      args.pop
+      args.pop              # pop rule_builders
       @allowed_values = args
     end
   end
@@ -54,7 +54,7 @@ end
 
 class LengthBetween
   def initialize(args)
-    args.pop
+    args.pop                # pop rule_builders
     @min_length = args[0]
     @max_length = args[1]
   end
@@ -69,7 +69,7 @@ end
 
 class Like
   def initialize(args)
-    args.pop      # pop rule_builders
+    args.pop                # pop rule_builders
     re = args[0]
     is_ignore_case = args.length == 2 && args[1] === 'i'
     @re = is_ignore_case ? %r(#{re})i : %r(#{re})
