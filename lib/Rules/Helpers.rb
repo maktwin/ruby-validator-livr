@@ -23,13 +23,13 @@ end
 class ListOf
   def initialize(args)
     if args[0].kind_of? Array
-      livr, rule_builders = args
+      rules, rule_builders = args
     else
       rule_builders = args.pop
-      livr = args
+      rules = args
     end
-    
-    @validator = LIVR.new({:field => livr}).register_rules(rule_builders).prepare
+    livr = {:field => rules}
+    @validator = LIVR.new(livr).register_rules(rule_builders).prepare
   end
 
   def [](values, unuse, output)
@@ -80,7 +80,6 @@ class ListOfObjects
         errors.push(@validator.get_errors)
       end
     end
-
     if errors.any?
       return errors
     else

@@ -61,7 +61,10 @@ class LIVR
 
   def validate(data)
     prepare unless @is_prepare
-    return 'FORMAT_ERROR' unless data.kind_of? Hash
+    unless data.kind_of? Hash
+      @errors = 'FORMAT_ERROR'
+      return
+    end
 
     result, errors = {}, {}
     @validators.each do |field_name, validators|

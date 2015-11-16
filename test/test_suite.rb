@@ -9,9 +9,21 @@ class LIVRTest < Minitest::Test
       lambda do |data|
         validator = LIVR.new(data['rules'])
         output = validator.validate(data['input'])
-
         assert(!validator.get_errors, 'Validator should contain no errors')
         assert_equal(output, data['output'], 'Validator should return validated data')
+      end
+    )
+  end
+
+  def test_negative
+    iterate_test_data(
+      'test_suite/negative',
+      lambda do |data|
+        validator = LIVR.new(data['rules'])
+        output = validator.validate(data['input'])
+
+        assert(!output, 'Validator should not return validated data')
+        assert_equal(data['errors'], validator.get_errors, 'Validator should return errors')
       end
     )
   end

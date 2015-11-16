@@ -1,3 +1,5 @@
+require 'Utils'
+
 class OneOf
   def initialize(args)
     if args[0].kind_of? Array
@@ -54,9 +56,7 @@ end
 
 class LengthBetween
   def initialize(args)
-    args.pop                # pop rule_builders
-    @min_length = args[0]
-    @max_length = args[1]
+    @min_length, @max_length = args
   end
 
   def [](value, unuse, unuse_)
@@ -71,12 +71,13 @@ class Like
   def initialize(args)
     args.pop                # pop rule_builders
     re = args[0]
-    is_ignore_case = args.length == 2 && args[1] === 'i'
+    is_ignore_case = args.length == 2 && args[1] == 'i'
     @re = is_ignore_case ? %r(#{re})i : %r(#{re})
   end
 
   def [](value, unuse, unuse_)
     return if value.nil? or value.eql?('')
+    return 'FORMAT_ERROR' unless Utils.is_string_or_number?(value)
     return 'WRONG_FORMAT' unless value =~ @re
   end
 end

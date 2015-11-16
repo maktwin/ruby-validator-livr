@@ -29,7 +29,7 @@ class Decimal
   def [](value, unuse, unuse_)
     return if value.nil? or value.eql?('')
     return 'FORMAT_ERROR' unless Utils.is_string_or_number?(value)
-    return 'NOT_DECIMAL' unless value.to_s =~ /^\-?[\d.]+$/
+    return 'NOT_DECIMAL' unless value.to_s =~ /^(?:\-?(?:[0-9]+\.[0-9]+)|(?:[0-9]+))$/
   end
 end
 
@@ -40,7 +40,7 @@ class PositiveDecimal
   def [](value, unuse, unuse_)
     return if value.nil? or value.eql?('')
     return 'FORMAT_ERROR' unless Utils.is_string_or_number?(value)
-    return 'NOT_POSITIVE_DECIMAL' unless value =~ /^\-?[\d.]+$/ and value.to_f > 0
+    return 'NOT_POSITIVE_DECIMAL' unless value.to_s =~ /^(?:(?:[0-9]*\.[0-9]+)|(?:[1-9][0-9]*))$/
   end
 end
 
@@ -70,9 +70,7 @@ end
 
 class NumberBetween
   def initialize(args)
-    args.pop
-    @min_number = args[0].to_f
-    @max_number = args[1].to_f
+    @min_number, @max_number = args
   end
 
   def [](value, unuse, unuse_)
