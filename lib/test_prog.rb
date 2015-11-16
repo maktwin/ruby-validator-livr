@@ -39,7 +39,7 @@ livr_rules = {
 }
 
 data = {
-  'name'  => 'maktwin',
+  'name'  => '   maktwin  ',
   'phone' => '55555',
   'email' => 'm.panchoha@gmail.com',
   'url'   => 'https://localhost',

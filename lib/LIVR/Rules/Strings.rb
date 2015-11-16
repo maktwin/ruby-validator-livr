@@ -1,4 +1,4 @@
-require 'Utils'
+require 'LIVR/Util'
 
 class OneOf
   def initialize(args)
@@ -77,7 +77,7 @@ class Like
 
   def [](value, unuse, unuse_)
     return if value.nil? or value.eql?('')
-    return 'FORMAT_ERROR' unless Utils.is_string_or_number?(value)
+    return 'FORMAT_ERROR' unless Util.is_string_or_number?(value)
     return 'WRONG_FORMAT' unless value =~ @re
   end
 end
