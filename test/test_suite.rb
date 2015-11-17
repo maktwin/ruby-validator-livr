@@ -3,7 +3,7 @@ require 'json'
 require 'LIVR'
 
 class LIVRTest < Minitest::Test
-  def test_positive
+  def test_livr_positive
     iterate_test_data(
       'test_suite/positive',
       lambda do |data|
@@ -16,7 +16,7 @@ class LIVRTest < Minitest::Test
     )
   end
 
-  def test_negative
+  def test_livr_negative
     iterate_test_data(
       'test_suite/negative',
       lambda do |data|

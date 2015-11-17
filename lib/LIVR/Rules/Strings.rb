@@ -28,7 +28,6 @@ class Strings
 
   def self.min_length(args)
     min_length = args.shift.to_i
-
     lambda do |value, unuse, unuse_|
       return if value.nil? or value.eql?('')
       return 'FORMAT_ERROR' unless value.kind_of? String
@@ -38,7 +37,6 @@ class Strings
 
   def self.length_equal(args)
     length = args.shift.to_i
-
     lambda do |value, unuse, unuse_|
       return if value.nil? or value.eql?('')
       return 'FORMAT_ERROR' unless value.kind_of? String
