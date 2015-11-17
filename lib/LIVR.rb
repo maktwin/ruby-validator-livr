@@ -64,7 +64,6 @@ class LIVR
 
   def register_aliased_rule(alias_hash)
     raise 'Alias name required' if alias_hash['name'].nil?
-
     @validator_builders[alias_hash['name']] = _build_aliased_rule(alias_hash)
     self
   end
@@ -113,9 +112,9 @@ class LIVR
     raise 'Alias rules required' if alias_hash['rules'].nil?
 
     livr = {:value => alias_hash['rules']}
-    lambda do |rule_builders|
+    lambda do |args|
+      rule_builders = args.pop
       validator = LIVR.new(livr).register_rules(rule_builders).prepare
-
       lambda do |value, unuse, output|
         result = validator.validate({:value => value})
         if result

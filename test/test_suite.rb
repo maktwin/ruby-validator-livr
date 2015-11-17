@@ -29,6 +29,38 @@ class LIVRTest < Minitest::Test
     )
   end
 
+  def test_aliases_positive
+    iterate_test_data(
+      'test_suite/aliases_positive',
+      lambda do |data|
+        validator = LIVR.new(data['rules'])
+        data['aliases'].each do |alias_hash|
+          validator.register_aliased_rule(alias_hash)
+        end
+        output = validator.validate(data['input'])
+
+        assert(!validator.get_errors, 'Validator should contain no errors')
+        assert_equal(output, data['output'], 'Validator should return validated data')
+      end
+    )
+  end
+
+  def test_aliases_negative
+    iterate_test_data(
+      'test_suite/aliases_negative',
+      lambda do |data|
+        validator = LIVR.new(data['rules'])
+        data['aliases'].each do |alias_hash|
+          validator.register_aliased_rule(alias_hash)
+        end
+        output = validator.validate(data['input'])
+
+        assert(!output, 'Validator should return false')
+        assert_equal(validator.get_errors, data['errors'], 'Validator should contain valid errors')
+      end
+    )
+  end
+
   def iterate_test_data(dir_basename, cb)
     dir_fullname = "#{__dir__}/#{dir_basename}"
     Dir["#{dir_fullname}/*"].each do |test_dir|
