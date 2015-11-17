@@ -144,7 +144,6 @@ class LIVR
       validators.each do |v_cb|
         arg = result.has_key?(field_name) ? result[field_name] : value
         error_code = v_cb.call(arg, data, field_result)
-        # p error_code, field_name, '++++++++++++++++'
         if error_code
           errors[field_name] = error_code
           break
