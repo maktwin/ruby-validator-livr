@@ -1,82 +1,63 @@
 require 'LIVR/Util'
 
-class Integers
-  def initialize(args)
+class Numerics
+  def self.integers(args)
+    lambda do |value, unuse, unuse_|
+      return if value.nil? or value.eql?('')
+      return 'FORMAT_ERROR' unless Util.is_string_or_number?(value)
+      return 'NOT_INTEGER' unless value.to_s =~ /^\-?\d+$/
+    end
   end
 
-  def [](value, unuse, unuse_)
-    return if value.nil? or value.eql?('')
-    return 'FORMAT_ERROR' unless Util.is_string_or_number?(value)
-    return 'NOT_INTEGER' unless value.to_s =~ /^\-?\d+$/
-  end
-end
-
-class PositiveInteger
-  def initialize(args)
+  def self.positive_integer(args)
+    lambda do |value, unuse, unuse_|
+      return if value.nil? or value.eql?('')
+      return 'FORMAT_ERROR' unless Util.is_string_or_number?(value)
+      return 'NOT_POSITIVE_INTEGER' unless value.to_s =~ /^\d+$/ and value.to_i > 0
+    end
   end
 
-  def [](value, unuse, unuse_)
-    return if value.nil? or value.eql?('')
-    return 'FORMAT_ERROR' unless Util.is_string_or_number?(value)
-    return 'NOT_POSITIVE_INTEGER' unless value.to_s =~ /^\d+$/ and value.to_i > 0
-  end
-end
-
-class Decimal
-  def initialize(args)
+  def self.decimal(args)
+    lambda do |value, unuse, unuse_|
+      return if value.nil? or value.eql?('')
+      return 'FORMAT_ERROR' unless Util.is_string_or_number?(value)
+      return 'NOT_DECIMAL' unless value.to_s =~ /^(?:\-?(?:[0-9]+\.[0-9]+)|(?:[0-9]+))$/
+    end
   end
 
-  def [](value, unuse, unuse_)
-    return if value.nil? or value.eql?('')
-    return 'FORMAT_ERROR' unless Util.is_string_or_number?(value)
-    return 'NOT_DECIMAL' unless value.to_s =~ /^(?:\-?(?:[0-9]+\.[0-9]+)|(?:[0-9]+))$/
-  end
-end
-
-class PositiveDecimal
-  def initialize(args)
-  end
-  
-  def [](value, unuse, unuse_)
-    return if value.nil? or value.eql?('')
-    return 'FORMAT_ERROR' unless Util.is_string_or_number?(value)
-    return 'NOT_POSITIVE_DECIMAL' unless value.to_s =~ /^(?:(?:[0-9]*\.[0-9]+)|(?:[1-9][0-9]*))$/
-  end
-end
-
-class MaxNumber
-  def initialize(args)
-    @max_number = args.shift.to_f
+  def self.positive_decimal(args)
+    lambda do |value, unuse, unuse_|
+      return if value.nil? or value.eql?('')
+      return 'FORMAT_ERROR' unless Util.is_string_or_number?(value)
+      return 'NOT_POSITIVE_DECIMAL' unless value.to_s =~ /^(?:(?:[0-9]*\.[0-9]+)|(?:[1-9][0-9]*))$/
+    end
   end
 
-  def [](value, unuse, unuse_)
-    return if value.nil? or value.eql?('')
-    return 'FORMAT_ERROR' unless Util.is_string_or_number?(value)
-    return 'TOO_HIGH' if value.to_f > @max_number
-  end
-end
-
-class MinNumber
-  def initialize(args)
-    @min_number = args.shift.to_f
+  def self.max_number(args)
+    max_number = args.shift.to_f
+    lambda do |value, unuse, unuse_|
+      return if value.nil? or value.eql?('')
+      return 'FORMAT_ERROR' unless Util.is_string_or_number?(value)
+      return 'TOO_HIGH' if value.to_f > max_number
+    end
   end
 
-  def [](value, unuse, unuse_)
-    return if value.nil? or value.eql?('')
-    return 'FORMAT_ERROR' unless Util.is_string_or_number?(value)
-    return 'TOO_LOW' if value.to_f < @min_number
-  end
-end
-
-class NumberBetween
-  def initialize(args)
-    @min_number, @max_number = args
+  def self.min_number(args)
+    min_number = args.shift.to_f
+    lambda do |value, unuse, unuse_|
+      return if value.nil? or value.eql?('')
+      return 'FORMAT_ERROR' unless Util.is_string_or_number?(value)
+      return 'TOO_LOW' if value.to_f < min_number
+    end
   end
 
-  def [](value, unuse, unuse_)
-    return if value.nil? or value.eql?('')
-    return 'FORMAT_ERROR' unless Util.is_string_or_number?(value)
-    return 'TOO_LOW' if value.to_f < @min_number
-    return 'TOO_HIGH' if value.to_f > @max_number
+  def self.number_between(args)
+    min_number, max_number = args
+    lambda do |value, unuse, unuse_|
+      return if value.nil? or value.eql?('')
+      return 'FORMAT_ERROR' unless Util.is_string_or_number?(value)
+      return 'TOO_LOW' if value.to_f < min_number
+      return 'TOO_HIGH' if value.to_f > max_number
+    end
   end
 end

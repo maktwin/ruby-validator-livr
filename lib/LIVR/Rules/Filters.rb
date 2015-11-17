@@ -1,56 +1,43 @@
-class Trim
-  def initialize(args)
+class Filters
+  def self.trim(args)
+    lambda do |value, unuse, output|
+      return if value.nil? or value.eql?('') or not value.kind_of? String
+      output.push(value.strip)
+      return nil
+    end
   end
 
-  def [](value, unuse, output)
-    return if value.nil? or value.eql?('') or not value.kind_of? String
-    output.push(value.strip)
-    return nil
-  end
-end
-
-class ToLc
-  def initialize(args)
+  def self.to_lc(args)
+    lambda do |value, unuse, output|
+      return if value.nil? or value.eql?('') or not value.kind_of? String
+      output.push(value.downcase)
+      return nil
+    end
   end
 
-  def [](value, unuse, output)
-    return if value.nil? or value.eql?('') or not value.kind_of? String
-    output.push(value.downcase)
-    return nil
-  end
-end
-
-class ToUc
-  def initialize(args)
+  def self.to_uc(args)
+    lambda do |value, unuse, output|
+      return if value.nil? or value.eql?('') or not value.kind_of? String
+      output.push(value.upcase)
+      return nil
+    end
   end
 
-  def [](value, unuse, output)
-    return if value.nil? or value.eql?('') or not value.kind_of? String
-    output.push(value.upcase)
-    return nil
-  end
-end
-
-class Remove
-  def initialize(args)
-    @chars = args.shift
+  def self.remove(args)
+    chars = args.shift
+    lambda do |value, unuse, output|
+      return if value.nil? or value.eql?('') or not value.kind_of? String
+      output.push(value.gsub(/[#{Regexp.escape(chars)}]/, ''))
+      return nil
+    end
   end
 
-  def [](value, unuse, output)
-    return if value.nil? or value.eql?('') or not value.kind_of? String
-    output.push(value.gsub(/[#{Regexp.escape(@chars)}]/, ''))
-    return nil
-  end
-end
-
-class LeaveOnly
-  def initialize(args)
-    @chars = args.shift
-  end
-
-  def [](value, unuse, output)
-    return if value.nil? or value.eql?('') or not value.kind_of? String
-    output.push(value.gsub(/[^\Q#{Regexp.escape(@chars)}\E]/, ''))
-    return nil
+  def self.leave_only(args)
+    chars = args.shift
+    lambda do |value, unuse, output|
+      return if value.nil? or value.eql?('') or not value.kind_of? String
+      output.push(value.gsub(/[^#{Regexp.escape(chars)}]/, ''))
+      return nil
+    end
   end
 end

@@ -7,40 +7,40 @@ require "LIVR/Rules/Helpers"
 
 class LIVR
   @@DEFAULT_RULES = {
-    'required'                  => Required,
-    'not_empty'                 => NotEmpty,
-    'not_empty_list'            => NotEmptyList,
+    'required'                  => Common.method(:required),
+    'not_empty'                 => Common.method(:not_empty),
+    'not_empty_list'            => Common.method(:not_empty_list),
 
-    'trim'                      => Trim,
-    'to_lc'                     => ToLc,
-    'to_uc'                     => ToUc,
-    'remove'                    => Remove,
-    'leave_only'                => LeaveOnly,
+    'trim'                      => Filters.method(:trim),
+    'to_lc'                     => Filters.method(:to_lc),
+    'to_uc'                     => Filters.method(:to_uc),
+    'remove'                    => Filters.method(:remove),
+    'leave_only'                => Filters.method(:leave_only),
 
-    'integer'                   => Integers,
-    'positive_integer'          => PositiveInteger,
-    'decimal'                   => Decimal,
-    'positive_decimal'          => PositiveDecimal,
-    'max_number'                => MaxNumber,
-    'min_number'                => MinNumber,
-    'number_between'            => NumberBetween,
+    'integer'                   => Numerics.method(:integers),
+    'positive_integer'          => Numerics.method(:positive_integer),
+    'decimal'                   => Numerics.method(:decimal),
+    'positive_decimal'          => Numerics.method(:positive_decimal),
+    'max_number'                => Numerics.method(:max_number),
+    'min_number'                => Numerics.method(:min_number),
+    'number_between'            => Numerics.method(:number_between),
 
-    'one_of'                    => OneOf,
-    'max_length'                => MaxLength,
-    'min_length'                => MinLength,
-    'length_equal'              => LengthEqual,
-    'length_between'            => LengthBetween,
-    'like'                      => Like,
+    'one_of'                    => Strings.method(:one_of),
+    'max_length'                => Strings.method(:max_length),
+    'min_length'                => Strings.method(:min_length),
+    'length_equal'              => Strings.method(:length_equal),
+    'length_between'            => Strings.method(:length_between),
+    'like'                      => Strings.method(:like),
 
-    'email'                     => Email,
-    'url'                       => Url,
-    'iso_date'                  => IsoDate,
-    'equal_to_field'            => EqualToField,
+    'email'                     => Special.method(:email),
+    'url'                       => Special.method(:url),
+    'iso_date'                  => Special.method(:iso_date),
+    'equal_to_field'            => Special.method(:equal_to_field),
 
-    'nested_object'             => NestedObject,
-    'list_of'                   => ListOf,
-    'list_of_objects'           => ListOfObjects,
-    'list_of_different_objects' => ListOfDifferentObjects
+    'nested_object'             => Helpers.method(:nested_object),
+    'list_of'                   => Helpers.method(:list_of),
+    'list_of_objects'           => Helpers.method(:list_of_objects),
+    'list_of_different_objects' => Helpers.method(:list_of_different_objects)
   }
 
   def initialize(livr_rules, is_auto_trim = false)
@@ -62,6 +62,13 @@ class LIVR
     self
   end
 
+  def register_aliased_rule(alias_hash)
+    raise 'Alias name required' if alias_hash['name'].nil?
+
+    @validator_builders[alias_hash['name']] = _build_aliased_rule(alias_hash)
+    self
+  end
+
   def prepare
     return unless @is_prepare == false
 
@@ -71,7 +78,7 @@ class LIVR
 
       field_rules.each do |rule|
         name, args = _parse_rule(rule)
-        validators.push(_build_validators(name, args))
+        validators.push(_build_validator(name, args))
       end
       @validators[field] = validators
     end
@@ -93,12 +100,33 @@ class LIVR
     [name, args]
   end
 
-  def _build_validators(name, args)
+  def _build_validator(name, args)
     raise "Rule [%s] not registered" % [name] unless @validator_builders.has_key?(name)
 
     allArgs = args
     allArgs.push(get_rules)
-    @validator_builders[name].new(allArgs)
+    @validator_builders[name].call(allArgs)
+  end
+
+  def _build_aliased_rule(alias_hash)
+    raise 'Alias name required'  if alias_hash['name'].nil?
+    raise 'Alias rules required' if alias_hash['rules'].nil?
+
+    livr = {:value => alias_hash['rules']}
+    lambda do |rule_builders|
+      validator = LIVR.new(livr).register_rules(rule_builders).prepare
+
+      lambda do |value, unuse, output|
+        result = validator.validate({:value => value})
+        if result
+          output.push(result[:value])
+          return
+        else
+          validator_errors = validator.get_errors
+          return alias_hash['error'] || validator_errors[:value]
+        end
+      end
+    end
   end
 
   def validate(data)
@@ -116,7 +144,7 @@ class LIVR
       value = data.has_key?(field_name) ? data[field_name] : nil
       validators.each do |v_cb|
         arg = result.has_key?(field_name) ? result[field_name] : value
-        error_code = v_cb[arg, data, field_result]
+        error_code = v_cb.call(arg, data, field_result)
         if error_code
           errors[field_name] = error_code
           break
