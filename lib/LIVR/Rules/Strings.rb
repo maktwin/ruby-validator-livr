@@ -1,6 +1,6 @@
 require 'LIVR/Util'
 
-class Strings
+module Strings
   def self.one_of(args)
     if args[0].kind_of? Array
       allowed_values = args.shift

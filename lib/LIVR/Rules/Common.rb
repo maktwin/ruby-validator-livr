@@ -1,4 +1,4 @@
-class Common
+module Common
   def self.required(args)
     lambda do |value, unuse, unuse_|
       return 'REQUIRED' if value.nil? or value.eql?('')

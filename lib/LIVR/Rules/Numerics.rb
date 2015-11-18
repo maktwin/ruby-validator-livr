@@ -1,6 +1,6 @@
 require 'LIVR/Util'
 
-class Numerics
+module Numerics
   def self.integers(args)
     lambda do |value, unuse, unuse_|
       return if value.nil? or value.eql?('')

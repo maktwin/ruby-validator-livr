@@ -1,4 +1,4 @@
-class Filters
+module Filters
   def self.trim(args)
     lambda do |value, unuse, output|
       return if value.nil? or value.eql?('') or not value.kind_of? String
