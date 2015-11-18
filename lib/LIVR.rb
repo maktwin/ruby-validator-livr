@@ -6,6 +6,7 @@ require "LIVR/Rules/Special"
 require "LIVR/Rules/Helpers"
 
 class LIVR
+  @@IS_DEFAULT_AUTO_TRIM = false
   @@DEFAULT_RULES = {
     'required'                  => Common.method(:required),
     'not_empty'                 => Common.method(:not_empty),
@@ -48,9 +49,13 @@ class LIVR
     @livr_rules = livr_rules
     @validators = {}
     @errors       = false
-    @is_auto_trim = is_auto_trim
     @validator_builders = {}
 
+    if is_auto_trim
+      @is_auto_trim = is_auto_trim
+    else
+      @is_auto_trim = @@IS_DEFAULT_AUTO_TRIM
+    end
     register_rules(@@DEFAULT_RULES)
     self
   end
@@ -81,6 +86,10 @@ class LIVR
     raise 'Alias name required' if alias_hash['name'].nil?
     @@DEFAULT_RULES[alias_hash['name']] = _build_aliased_rule(alias_hash)
     self
+  end
+
+  def self.default_auto_trim(is_auto_trim)
+    @@IS_DEFAULT_AUTO_TRIM = !!is_auto_trim
   end
 
   def prepare
