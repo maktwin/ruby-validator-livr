@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="CustomFiltersTest" skipped="0" failures="0" errors="0" tests="1" assertions="1" time="0.000102093">
-  <testcase name="test_custom_filters" classname="CustomFiltersTest" assertions="1" time="0.000102093">
-  </testcase>
-</testsuite>

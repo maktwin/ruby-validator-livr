@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="AutoTrimTest" skipped="0" failures="0" errors="0" tests="2" assertions="4" time="0.00037127000000000004">
-  <testcase name="test_auto_trim_negative" classname="AutoTrimTest" assertions="2" time="0.000166085">
-  </testcase>
-  <testcase name="test_auto_trim_positive" classname="AutoTrimTest" assertions="2" time="0.000205185">
-  </testcase>
-</testsuite>
