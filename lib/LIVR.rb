@@ -56,8 +56,9 @@ class LIVR
   end
 
   def register_rules(rules)
-    rules.each do |name, value|
-      @validator_builders[name] = value
+    rules.each do |rule_name, rule_builder|
+      raise "RULE_BUILDER [%s] SHOULD BE A CODEREF" % rule_name unless rule_builder.respond_to? :call
+      @validator_builders[rule_name] = rule_builder
     end
     self
   end
@@ -65,6 +66,20 @@ class LIVR
   def register_aliased_rule(alias_hash)
     raise 'Alias name required' if alias_hash['name'].nil?
     @validator_builders[alias_hash['name']] = _build_aliased_rule(alias_hash)
+    self
+  end
+
+  def self.register_default_rules(rules)
+    rules.each do |rule_name, rule_builder|
+      raise "RULE_BUILDER [%s] SHOULD BE A CODEREF" % rule_name unless rule_builder.respond_to? :call
+      @@DEFAULT_RULES[rule_name] = rule_builder
+    end
+    self
+  end
+
+  def self.register_aliased_default_rule(alias_hash)
+    raise 'Alias name required' if alias_hash['name'].nil?
+    @@DEFAULT_RULES[alias_hash['name']] = _build_aliased_rule(alias_hash)
     self
   end
 
@@ -168,6 +183,10 @@ class LIVR
 
   def get_errors
     @errors
+  end
+
+  def self.get_default_rules
+    @@DEFAULT_RULES
   end
 
   def _auto_trim(data)

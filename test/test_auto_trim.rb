@@ -1,7 +1,7 @@
 require 'minitest/autorun'
 require 'LIVR'
 
-class LIVRAutoTrimTest < Minitest::Test
+class AutoTrimTest < Minitest::Test
   def setup
     @validator = LIVR.new({
       'code'     => 'required',
