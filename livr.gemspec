@@ -23,7 +23,7 @@ Gem::Specification.new do |s|
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- test/*`.split("\n")
 
-  s.add_development_dependency "rake", "~> 10.4"
+  s.add_development_dependency "rake"
   s.add_development_dependency "minitest", "~> 5.4"
   s.add_development_dependency "minitest-reporters", "~> 1.1"
 end

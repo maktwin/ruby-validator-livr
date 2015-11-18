@@ -1,3 +1,2 @@
-group :test do
-  gem 'minitest-reporters'
-end
+source "https://rubygems.org"
+gemspec
