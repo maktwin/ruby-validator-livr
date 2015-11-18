@@ -60,7 +60,7 @@ class LIVRTest < Minitest::Test
   end
 
   def iterate_test_data(dir_basename, cb)
-    dir_fullname = "#{__dir__}/#{dir_basename}"
+    dir_fullname = "#{File.dirname(__FILE__)}/#{dir_basename}"
     test_dirs = Dir["#{dir_fullname}/*"].sort!
     test_dirs.each do |test_dir|
       data = {}
