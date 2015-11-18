@@ -1,5 +1,4 @@
-require 'minitest/autorun'
-require 'LIVR'
+require 'test_helper'
 
 class CustomFiltersTest < Minitest::Test
   def setup

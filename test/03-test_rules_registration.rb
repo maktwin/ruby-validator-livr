@@ -1,5 +1,4 @@
-require 'minitest/autorun'
-require 'LIVR'
+require 'test_helper'
 
 class RulesRegistrationTest < Minitest::Test
   def setup
@@ -15,7 +14,7 @@ class RulesRegistrationTest < Minitest::Test
     @validator = LIVR.new({
       'code'       => 'alphanumeric',
       'password'   => 'strong_password',
-      'address'    => { 'nested_object'  => {
+      'address'    => { 'nested_object' => {
         'street'   => 'alphanumeric',
         'password' => 'strong_password'
       }}

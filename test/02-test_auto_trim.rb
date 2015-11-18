@@ -1,5 +1,4 @@
-require 'minitest/autorun'
-require 'LIVR'
+require 'test_helper'
 
 class AutoTrimTest < Minitest::Test
   def setup

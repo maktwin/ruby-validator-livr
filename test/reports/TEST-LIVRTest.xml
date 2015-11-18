@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="LIVRTest" skipped="0" failures="0" errors="0" tests="4" assertions="118" time="0.027388364">
+  <testcase name="test_aliases_negative" classname="LIVRTest" assertions="6" time="0.002541058">
+  </testcase>
+  <testcase name="test_livr_positive" classname="LIVRTest" assertions="58" time="0.013120395">
+  </testcase>
+  <testcase name="test_livr_negative" classname="LIVRTest" assertions="48" time="0.009285959">
+  </testcase>
+  <testcase name="test_aliases_positive" classname="LIVRTest" assertions="6" time="0.002440952">
+  </testcase>
+</testsuite>

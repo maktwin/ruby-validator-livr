@@ -1,6 +1,4 @@
-require 'minitest/autorun'
-require 'json'
-require 'LIVR'
+require "test_helper"
 
 class LIVRTest < Minitest::Test
   def test_livr_positive
@@ -63,7 +61,8 @@ class LIVRTest < Minitest::Test
 
   def iterate_test_data(dir_basename, cb)
     dir_fullname = "#{__dir__}/#{dir_basename}"
-    Dir["#{dir_fullname}/*"].each do |test_dir|
+    test_dirs = Dir["#{dir_fullname}/*"].sort!
+    test_dirs.each do |test_dir|
       data = {}
       Dir["#{test_dir}/*.json"].each do |test_data|
         key_data    = File.basename(test_data, ".json")
