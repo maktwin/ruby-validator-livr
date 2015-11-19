@@ -136,7 +136,7 @@ rule_builder - is a lambda function which will be called for building single rul
           return "SOME_ERROR_CODE" if notValid
         end
       end
-    });
+    })
 
 Then you can use "my\_rule" for validation:
     
