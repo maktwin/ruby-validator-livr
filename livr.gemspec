@@ -3,7 +3,7 @@
 Gem::Specification.new do |s|
   s.name = "livr"
 
-  s.version = "0.0.1"
+  s.version = "0.0.2"
 
   s.homepage = "https://github.com/maktwin/ruby-validator-livr"
 
