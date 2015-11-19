@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.org/maktwin/ruby-validator-livr.svg?branch=master)](https://travis-ci.org/maktwin/ruby-validator-livr)
 
 # NAME
-LIVR.Validator - Lightweight validator supporting Language Independent Validation Rules Specification (LIVR)
+LIVR - Lightweight validator supporting Language Independent Validation Rules Specification (LIVR)
 
 # SYNOPSIS
 Common usage:
@@ -18,7 +18,7 @@ Common usage:
       'password2' => { 'equal_to_field' => 'password' }
     })
 
-    valid_data = validator.validate(userData)
+    valid_data = validator.validate(user_data)
 
     if valid_data
       save_user(valid_data)
@@ -55,7 +55,7 @@ Or you can write more sophisticated rules directly:
 
     validator.register_rules({
       'strong_password' => lambda do |args|
-        lambda do |value, unuse, unuse_|
+        lambda do |value, params, output|
           return if value.nil? or value.eql?('')
           return 'WEAK_PASSWORD' if value.to_s.length < 6
         end
@@ -176,8 +176,8 @@ Validates user input. On success returns valid_data (contains only data that has
 
     my valida_data = validator.validate(input)
 
-    if validData
-      # use validData
+    if valid_data
+      # use valid_data
     else
       errors = validator.get_errors
     end
