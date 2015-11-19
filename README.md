@@ -174,7 +174,7 @@ Enables or disables automatic trim for input data. If is on then every new valid
 ## validator.validate(input)
 Validates user input. On success returns valid_data (contains only data that has described validation rules). On error return false.
 
-    my valida_data = validator.validate(input)
+    my valid_data = validator.validate(input)
 
     if valid_data
       # use valid_data
