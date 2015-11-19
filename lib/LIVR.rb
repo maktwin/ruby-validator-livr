@@ -70,7 +70,7 @@ class LIVR
 
   def register_aliased_rule(alias_hash)
     raise 'Alias name required' if alias_hash['name'].nil?
-    @validator_builders[alias_hash['name']] = _build_aliased_rule(alias_hash)
+    @validator_builders[alias_hash['name']] = self.class._build_aliased_rule(alias_hash)
     self
   end
 
@@ -131,7 +131,7 @@ class LIVR
     @validator_builders[name].call(allArgs)
   end
 
-  def _build_aliased_rule(alias_hash)
+  def self._build_aliased_rule(alias_hash)
     raise 'Alias name required'  if alias_hash['name'].nil?
     raise 'Alias rules required' if alias_hash['rules'].nil?
 

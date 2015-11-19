@@ -10,7 +10,7 @@ module Filters
   def self.to_lc(args)
     lambda do |value, unuse, output|
       return if value.nil? or value.eql?('') or not value.kind_of? String
-      output.push(value.downcase)
+      output.push(value.downcase!)
       return nil
     end
   end
@@ -18,7 +18,7 @@ module Filters
   def self.to_uc(args)
     lambda do |value, unuse, output|
       return if value.nil? or value.eql?('') or not value.kind_of? String
-      output.push(value.upcase)
+      output.push(value.upcase!)
       return nil
     end
   end
