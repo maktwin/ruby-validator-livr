@@ -4,7 +4,7 @@ require 'LIVR/Util'
 
 module Special
   def self.email(args)
-    email_re = %r(^([\w\-_+]+(?:\.[\w\-_+]+)*)@((?:[\w\-]+\.)*\w[\w\-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)i
+    email_re = %r(^([\w\-+]+(?:\.[\w\-+]+)*)@((?:[\w\-]+\.)*\w[\w\-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)i
 
     lambda do |value, unuse, unuse_|
       return if value.nil? or value.eql?('')

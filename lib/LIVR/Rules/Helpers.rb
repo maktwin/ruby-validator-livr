@@ -1,5 +1,3 @@
-require 'LIVR'
-
 module Helpers
   def self.nested_object(args)
     livr, rule_builders = args
