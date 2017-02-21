@@ -12,10 +12,17 @@ module Common
   end
 
   def self.not_empty_list(args)
-    lambda do |list, unuse, unuse_|
-      return 'CANNOT_BE_EMPTY' if list.eql?('') or list.nil?
-      return 'WRONG_FORMAT'    unless list.kind_of? Array
-      return 'CANNOT_BE_EMPTY' if list.size.equal?(0)
+    lambda do |value, unuse, unuse_|
+      return 'CANNOT_BE_EMPTY' if value.eql?('') or value.nil?
+      return 'WRONG_FORMAT' unless value.kind_of? Array
+      return 'CANNOT_BE_EMPTY' if value.size.equal?(0)
+    end
+  end
+
+  def self.any_object(args)
+    lambda do |value, unuse, unuse_|
+      return if value.nil? or value.eql?('')
+      return 'FORMAT_ERROR' unless value.kind_of? Hash
     end
   end
 end

@@ -1,0 +1,30 @@
+PATH
+  remote: .
+  specs:
+    livr (0.0.2)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    ansi (1.5.0)
+    builder (3.2.3)
+    minitest (5.10.1)
+    minitest-reporters (1.1.14)
+      ansi
+      builder
+      minitest (>= 5.0)
+      ruby-progressbar
+    rake (12.0.0)
+    ruby-progressbar (1.8.1)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  livr!
+  minitest (~> 5.4)
+  minitest-reporters (~> 1.1)
+  rake
+
+BUNDLED WITH
+   1.13.7
