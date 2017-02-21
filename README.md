@@ -27,7 +27,7 @@ Common usage:
     end
 
 
-You can use filters separately or can combine them with validation:
+You can use modifiers separately or can combine them with validation:
 
     validator = LIVR.new({
       'email' => [ 'required', 'trim', 'email', 'to_lc' ]

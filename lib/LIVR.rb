@@ -1,9 +1,9 @@
 require "LIVR/Rules/Common"
-require "LIVR/Rules/Filters"
+require "LIVR/Rules/Modifiers"
 require "LIVR/Rules/Numerics"
 require "LIVR/Rules/Strings"
 require "LIVR/Rules/Special"
-require "LIVR/Rules/Helpers"
+require "LIVR/Rules/Meta"
 
 class LIVR
   @@IS_DEFAULT_AUTO_TRIM = false
@@ -12,11 +12,11 @@ class LIVR
     'not_empty'                 => Common.method(:not_empty),
     'not_empty_list'            => Common.method(:not_empty_list),
 
-    'trim'                      => Filters.method(:trim),
-    'to_lc'                     => Filters.method(:to_lc),
-    'to_uc'                     => Filters.method(:to_uc),
-    'remove'                    => Filters.method(:remove),
-    'leave_only'                => Filters.method(:leave_only),
+    'trim'                      => Modifiers.method(:trim),
+    'to_lc'                     => Modifiers.method(:to_lc),
+    'to_uc'                     => Modifiers.method(:to_uc),
+    'remove'                    => Modifiers.method(:remove),
+    'leave_only'                => Modifiers.method(:leave_only),
 
     'integer'                   => Numerics.method(:integers),
     'positive_integer'          => Numerics.method(:positive_integer),
@@ -38,10 +38,10 @@ class LIVR
     'iso_date'                  => Special.method(:iso_date),
     'equal_to_field'            => Special.method(:equal_to_field),
 
-    'nested_object'             => Helpers.method(:nested_object),
-    'list_of'                   => Helpers.method(:list_of),
-    'list_of_objects'           => Helpers.method(:list_of_objects),
-    'list_of_different_objects' => Helpers.method(:list_of_different_objects)
+    'nested_object'             => Meta.method(:nested_object),
+    'list_of'                   => Meta.method(:list_of),
+    'list_of_objects'           => Meta.method(:list_of_objects),
+    'list_of_different_objects' => Meta.method(:list_of_different_objects)
   }
 
   def initialize(livr_rules, is_auto_trim = false)

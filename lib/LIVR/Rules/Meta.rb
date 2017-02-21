@@ -1,4 +1,4 @@
-module Helpers
+module Meta
   def self.nested_object(args)
     livr, rule_builders = args
     validator = LIVR.new(livr).register_rules(rule_builders).prepare
