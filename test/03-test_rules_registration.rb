@@ -24,7 +24,7 @@ class RulesRegistrationTest < Minitest::Test
       'alphanumeric' => lambda do |args|
         lambda do |value, unuse, unuse_|
           return if value.nil? or value.eql?('')
-          return 'NOT_ALPHANUMERIC' unless $value =~ /^[a-z0-9]+$/
+          return 'NOT_ALPHANUMERIC' unless value =~ /^[a-z0-9]+$/
         end
       end
     })
