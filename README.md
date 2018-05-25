@@ -6,6 +6,7 @@ LIVR - Lightweight validator supporting Language Independent Validation Rules Sp
 # SYNOPSIS
 Common usage:
 
+```ruby
     require 'LIVR'
     LIVR.default_auto_trim('is_auto_trim')
 
@@ -25,30 +26,35 @@ Common usage:
     else
       errors = validator.get_errors
     end
-
+```
 
 You can use modifiers separately or can combine them with validation:
 
+```ruby
     validator = LIVR.new({
       'email' => [ 'required', 'trim', 'email', 'to_lc' ]
     })
+```
 
 Feel free to register your own rules:
 
 You can use aliases(prefferable, syntax covered by the specification) for a lot of cases:
 
+```ruby
     validator = LIVR.new({
       'password' => ['required', 'strong_password']
     })
 
-    validator.register_aliased_rule({ 
+    validator.register_aliased_rule({
       'name'  => 'strong_password',
       'rules' => {'min_length' => 6},
       'error' => 'WEAK_PASSWORD'
     })
+```
 
 Or you can write more sophisticated rules directly:
 
+```ruby
     validator = LIVR.new({
       'password' => ['required', 'strong_password']
     })
@@ -61,6 +67,7 @@ Or you can write more sophisticated rules directly:
         end
       end
     })
+```
 
 # DESCRIPTION
 See ['LIVR Specification'](http://livr-spec.org) for detailed documentation and list of supported rules.
@@ -75,27 +82,30 @@ Features:
  * Easy to describe and undersand rules
  * Returns understandable error codes(not error messages)
  * Easy to add own rules
- * Rules are be able to change results output ("trim", "nested\_object", for example)
+ * Rules are be able to change results output (`trim`, `nested_object`, for example)
  * Multipurpose (user input validation, configs validation, contracts programming etc)
 
 # INSTALL
 
 Install LIVR from RubyGems using gem::
 
+```bash
     gem install livr
+```
 
 # CLASS METHODS
 
-## LIVR.new(livr, is_auto_trim)
+## `LIVR.new(livr, is_auto_trim)``
 Contructor creates validator objects.
-livr - validations rules. Rules description is available here - https://github.com/koorchik/LIVR
+`livr` - validations rules. Rules description is available here - [LIVR](https://github.com/koorchik/LIVR)
 
-is_auto_trim - asks validator to trim all values before validation. Output will be also trimmed.
-if is_auto_trim is nil than default_auto_trim value will be used.
+`is_auto_trim` - asks validator to trim all values before validation. Output will be also trimmed.
+if `is_auto_trim` is `nil` than `default_auto_trim` value will be used.
 
-## LIVR.register_aliased_default_rule(alias)
-alias - is a hash that contains: name, rules, error (optional).
+## `LIVR.register_aliased_default_rule(alias)`
+`alias` - is a hash that contains: `name`, `rules`, `error` (optional).
 
+```ruby
     LIVR.register_aliased_default_rule({
       'name'  => 'valid_address',
       'rules' => { 'nested_object' => {
@@ -104,51 +114,61 @@ alias - is a hash that contains: name, rules, error (optional).
         'zip' => 'positive_integer'
       }}
     })
+```
 
-Then you can use "valid\_address" for validation:
+Then you can use `valid_address` for validation:
 
+```ruby
     {
       'address' => 'valid_address'
     }
+```
 
 
-You can register aliases with own errors: 
+You can register aliases with own errors:
 
+```ruby
     LIVR.register_aliased_default_rule({
       'name' => 'adult_age',
       'rules' => [ 'positive_integer', { 'min_number' => 18 } ],
       'error' => 'WRONG_AGE'
     })
+```
 
-All rules/aliases for the validator are equal. The validator does not distinguish "required", "list\_of\_different\_objects" and "trim" rules. So, you can extend validator with any rules/alias you like.
+All rules/aliases for the validator are equal. The validator does not distinguish `required`, `list_of_different_objects` and `trim` rules. So, you can extend validator with any rules/alias you like.
 
-## LIVR.register_default_rules({"rule\_name" => rule_builder })
-rule_builder - is a lambda function which will be called for building single rule validator.
+## `LIVR.register_default_rules({"rule_name" => rule_builder })`
+`rule_builder` - is a lambda function which will be called for building single rule validator.
 
+```ruby
     LIVR.register_default_rules({
       'my_rule' => lambda do |args|
         rule_builders = args.pop
         # rule_builders - are rules from original validator
         # to allow you create new validator with all supported rules
         # validator = LIVR.new(livr).register_rules(rule_builders).prepare
-    
+
         lambda do |value, params, output|
           return "SOME_ERROR_CODE" if notValid
         end
       end
     })
+```
 
-Then you can use "my\_rule" for validation:
-    
+Then you can use `my_rule` for validation:
+
+```ruby
     {
       'name1' => 'my_rule', # Call without parameters
       'name2' => { 'my_rule': arg1 }, # Call with one parameter.
       'name3' => { 'my_rule': [arg1] }, # Call with one parameter.
       'name4' => { 'my_rule': [ arg1, arg2, arg3 ] } # Call with many parameters.
     }
+```
 
-Here is "max\_number" implemenation:
+Here is `max_number` implemenation:
 
+```ruby
     max_number = lambda do |args|
       max_number = args.shift
       lambda do |value, params, output|
@@ -159,21 +179,23 @@ Here is "max\_number" implemenation:
       end
     end
     LIVR.register_default_rules({'max_number' => max_number})
+```
 
-All rules for the validator are equal. The validator does not distinguish "required", "list\_of\_different\_objects" and "trim" rules. So, you can extend validator with any rules you like.
+All rules for the validator are equal. The validator does not distinguish `required`, `list_of_different_objects` and `trim` rules. So, you can extend validator with any rules you like.
 
-## LIVR.get_default_rules
-returns object containing all default rule_builders for the validator. You can register new rule or update existing one with "register_rules" method.
+## `LIVR.get_default_rules`
+returns object containing all default `rule_builders` for the validator. You can register new rule or update existing one with `register_rules` method.
 
-## LIVR.default_auto_trim(is_auto_trim)
+## `LIVR.default_auto_trim(is_auto_trim)`
 Enables or disables automatic trim for input data. If is on then every new validator instance will have auto trim option enabled
 
 
 # OBJECT METHODS
 
-## validator.validate(input)
+## `validator.validate(input)`
 Validates user input. On success returns valid_data (contains only data that has described validation rules). On error return false.
 
+```ruby
     my valid_data = validator.validate(input)
 
     if valid_data
@@ -181,45 +203,49 @@ Validates user input. On success returns valid_data (contains only data that has
     else
       errors = validator.get_errors
     end
+```
 
-## validator.get_errors
+## `validator.get_errors`
 Returns errors object.
 
+```ruby
    {
       "field1" => "ERROR_CODE",
       "field2" => "ERROR_CODE",
         ...
     }
+```
 
 For example:
-
+```ruby
     {
       "country"  => "NOT_ALLOWED_VALUE",
       "zip"      => "NOT_POSITIVE_INTEGER",
       "street"   => "REQUIRED",
       "building" => "NOT_POSITIVE_INTEGER"
     }
+```
 
-## validator.register_rules({"rule_name": rule_builder})
+## `validator.register_rules({"rule_name": rule_builder})`
 
-rule_builder - is a lambda function which will be called for building single rule validator.
+`rule_builder` - is a lambda function which will be called for building single rule validator.
 
-See "LIVR.register_default_rules" for rules examples.
+See `LIVR.register_default_rules` for rules examples.
 
-## validator.register_aliased_rule(alias)
+## `validator.register_aliased_rule(alias)`
 
-alias - is a composite validation rule. 
+`alias` - is a composite validation rule.
 
-See "LIVR.register_aliased_default_rule" for rules examples.
+See `LIVR.register_aliased_default_rule` for rules examples.
 
-## validator.get_rules
-returns object containing all rule_builders for the validator. You can register new rule or update existing one with "register_rules" method.
+## `validator.get_rules`
+returns object containing all rule_builders for the validator. You can register new rule or update existing one with `register_rules` method.
 
 # AUTHOR
 koorchik (Viktor Turskyi), maktwin (Maksym Panchokha)
 
 # BUGS
-Please report any bugs or feature requests to Github https://github.com/maktwin/ruby-validator-livr
+Please report any bugs or feature requests to Github [ruby-validator-livr](https://github.com/maktwin/ruby-validator-livr)
 
 # LICENSE AND COPYRIGHT
 
