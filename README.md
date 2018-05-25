@@ -95,7 +95,7 @@ Install LIVR from RubyGems using gem::
 
 # CLASS METHODS
 
-## `LIVR.new(livr, is_auto_trim)``
+## `LIVR.new(livr, is_auto_trim)`
 Contructor creates validator objects.
 `livr` - validations rules. Rules description is available here - [LIVR](https://github.com/koorchik/LIVR)
 
